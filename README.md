@@ -5,11 +5,11 @@ The auth-service-client is a Go client for interacting with the Auth Service, pr
 This client is auto-generated using oapi-codegen based on the OpenAPI specification of the Auth Service.
 
 **Features**
-* Login and authentication.
-* Token validation and refresh support.
-* Predefined request and response types.
-* Easily configurable for different environments.
 
+- Login and authentication.
+- Token validation and refresh support.
+- Predefined request and response types.
+- Easily configurable for different environments.
 
 ## Installation
 
@@ -29,39 +29,45 @@ Here’s a quick example of how to use the auth-service-client:
 package main
 
 import (
-    "context"
-    "fmt"
-    "log"
-    "github.com/ryanholmesdev/auth-service-client"
+	"context"
+	"fmt"
+	"log"
+	"net/http"
+
+	"github.com/ryanholmesdev/auth-service-client"
 )
 
 func main() {
-	
-    // Base URL of your Auth Service
-    baseURL := "https://auth-service.example.com"
-    
-    // Create a new client
-    client, err := authserviceclient.NewClientWithResponses(baseURL)
-    if err != nil {
-        log.Fatalf("Failed to create client: %v", err)
-    }
-    
-    // Login API example
-    resp, err := client.LoginWithResponse(context.Background(), authserviceclient.LoginRequest{
-        Username: "exampleuser",
-        Password: "examplepassword",
-    })
-    
-    if err != nil {
-        log.Fatalf("Failed to call Login API: %v", err)
-    }
-    
-    if resp.JSON200 != nil {
-        fmt.Printf("Login successful! Token: %s\n", resp.JSON200.Token)
-    } 
-    else {
-        fmt.Println("Login failed!")
-    }
+	// Base URL of your Auth Service
+	baseURL := "https://auth-service.example.com"
+
+	// Create a new Auth Service Client
+	client, err := authserviceclient.NewClientWithResponses(baseURL)
+	if err != nil {
+		log.Fatalf("Failed to create Auth Service Client: %v", err)
+	}
+
+	// Define parameters for GetAuthProviderLogin
+	params := &authserviceclient.GetAuthProviderLoginParams{
+		RedirectUri: "https://your-app.example.com/callback", // Set your redirect URI
+	}
+
+	// Provider for authentication (e.g., "spotify", "google")
+	provider := "spotify"
+
+	// Make the GetAuthProviderLogin request
+	resp, err := client.GetAuthProviderLogin(context.Background(), provider, params)
+	if err != nil {
+		log.Fatalf("Error calling GetAuthProviderLogin: %v", err)
+	}
+	defer resp.Body.Close()
+
+	// Process the response
+	if resp.StatusCode == http.StatusOK {
+		fmt.Println("GetAuthProviderLogin succeeded!")
+	} else {
+		fmt.Printf("GetAuthProviderLogin failed with status code: %d\n", resp.StatusCode)
+	}
 }
 
 ```
