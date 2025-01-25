@@ -52,7 +52,7 @@ func main() {
 		RedirectUri: "https://your-app.example.com/callback", // Set your redirect URI
 	}
 
-	// Provider for authentication (e.g., "spotify", "google")
+	// Provider for authentication (e.g., "spotify", "tidal")
 	provider := "spotify"
 
 	// Make the GetAuthProviderLogin request
