@@ -1,15 +1,12 @@
 # Auth Service Client
 
-The auth-service-client is a Go client for interacting with the Auth Service, providing convenient methods to call endpoints like login, token validation, and more.
+The auth-service-client is a Go client for interacting with the Auth Service.
 
 This client is auto-generated using oapi-codegen based on the OpenAPI specification of the Auth Service.
 
 **Features**
 
-- Login and authentication.
-- Token validation and refresh support.
-- Predefined request and response types.
-- Easily configurable for different environments.
+-- All endpoints from the Auth Service are available here
 
 ## Installation
 
@@ -25,6 +22,8 @@ Or specify a particular version:
 
 Here’s a quick example of how to use the auth-service-client:
 
+Other methods can be found in the client itself
+
 ```go
 package main
 
@@ -38,7 +37,8 @@ import (
 )
 
 func main() {
-	// Base URL of your Auth Service
+
+	// Set the Url for the client to point too
 	baseURL := "https://auth-service.example.com"
 
 	// Create a new Auth Service Client
@@ -49,7 +49,7 @@ func main() {
 
 	// Define parameters for GetAuthProviderLogin
 	params := &authserviceclient.GetAuthProviderLoginParams{
-		RedirectUri: "https://your-app.example.com/callback", // Set your redirect URI
+		RedirectUri: "https://your-app.example.com/callback", 
 	}
 
 	// Provider for authentication (e.g., "spotify", "tidal")
